@@ -3,34 +3,12 @@ const next = require("next");
 const Router = require("koa-router");
 const bodyParser = require("koa-bodyparser");
 
-const port = parseInt(process.env.PORT, 10) || 3000;
+const port = parseInt(process.env.PORT, 10) || 4000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-// Records
-// const Records = require("./models/record");
-
-// (async () => {
-//   const records = await Records.findAll();
-//   console.log('records: ', records);
-// })();
-
 const RecordsController = require('./controllers/recordsController')
-
-
-// (async () => {
-//   const dog = await Records.create({
-//     id: 2,
-//     author: "Odie",
-//     project_name: "Hello",
-//     created_at: "2008-08-08:12:32:43",
-//     updated_at: "2019-08-08:12:32:43",
-//     data: "dasdwewfwfewfw"
-//   });
-//   console.log("created: " + JSON.stringify(dog));
-// })();
-
 
 app.prepare().then(() => {
   const server = new Koa();
@@ -47,10 +25,8 @@ app.prepare().then(() => {
     ctx.respond = false;
   });
 
-  router.get("/get_records", async ctx => {
-    // await app.render(ctx.req, ctx.res, "/b", ctx.query);
-    const records = await RecordsController.getRecords()
-    
+  router.post("/api/get_records", async ctx => {
+    const records = await RecordsController.getRecords(ctx.request.body)
     ctx.body = records;
   });
 

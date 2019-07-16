@@ -10,6 +10,9 @@ const Records = sequelize.define(
       primaryKey: true
     },
     author: Sequelize.STRING(255),
+    message: Sequelize.STRING(255),
+    branch_ref: Sequelize.STRING(255),
+    head_commit: Sequelize.STRING(255),
     project_name: Sequelize.STRING(255),
     data: Sequelize.TEXT,
     created_at: Sequelize.DATE,
