@@ -1,5 +1,5 @@
 ## Introdution
-This repo provides backend api for peach-pit.
+This repo provides backend api for Merge record.
 
 ### Setup in Development
 - Install `mysql`.
