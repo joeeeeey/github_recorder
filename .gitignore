@@ -12,7 +12,6 @@ run/
 test/
 scripts/
 tmp/
-config/config.prod.js
-config/config.local.js
+config/config.js
 .travis.yml
 .next/

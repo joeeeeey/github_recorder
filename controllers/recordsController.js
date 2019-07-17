@@ -17,7 +17,6 @@ class RecordsController {
     });
 
     const records = await Records.findAll({
-      // where: whereClause,
       where: likeClause,
       order: [
         ["created_at", "DESC"]

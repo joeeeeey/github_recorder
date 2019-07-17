@@ -1,5 +1,4 @@
 const sequelize = require("../database/connection")()
-// const sequelize = Connection()
 const Sequelize = require("sequelize");
 
 const Records = sequelize.define(

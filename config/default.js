@@ -11,7 +11,7 @@ module.exports = {
       port: '3306',
       user: 'root',
       password: '',
-      database: 'github_recorder_development'
+      database: 'github_recorder_development',
     }
   },
   env: 'dev'
