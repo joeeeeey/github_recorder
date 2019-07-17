@@ -30,7 +30,7 @@ app.prepare().then(() => {
     ctx.body = records;
   });
 
-  router.post("/gh_callback_handler", async ctx => {
+  router.post("/api/gh_callback_handler", async ctx => {
     const result = await RecordsController.handleGithubCallback(ctx.request.body)
     ctx.body = result;
   });
