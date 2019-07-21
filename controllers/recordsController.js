@@ -1,6 +1,7 @@
 const Records = require("../models/record");
 const moment = require("moment");
 const Sequelize = require("sequelize");
+const SlackController = require('./slackController')
 
 class RecordsController {
   static async getRecords(filters) {
@@ -12,6 +13,7 @@ class RecordsController {
 
     const likeClause = {}
 
+    console.log('whereClause: ', whereClause);
     Object.keys(whereClause).forEach(key => {
       likeClause[key] = { [Sequelize.Op.like]: `%${whereClause[key]}%`}
     });
@@ -43,18 +45,30 @@ class RecordsController {
     //  if (ref === 'refs/heads/master') {
     if (!!ref) {
       if (head_commit && repository) {
-        const { author, message, id } = head_commit;
+        const { author, message, id, url } = head_commit;
 
-        const result = await this.addRecord({
+        const payload = {
           message,
           branch_ref: ref,
           head_commit: id,
+          head_commit_url: url,
           author: author.name,
           project_name: repository.name,
           data: JSON.stringify(data),
           created_at: moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-        });
-        return result;
+        }
+
+        try {
+          if (ref === 'refs/heads/master'){
+            await SlackController.sendMessage(payload)
+          }
+          
+          await this.addRecord(payload);
+
+          return {success: 1};
+        } catch (error) {
+          return {success: 0, msg: error.toString()};
+        }
       } else {
         return { msg: "Missing param" };
       }
